@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Request User Override</title>
+	<script src="12hv9bvj5k45gf.min.js"></script>
+	</script>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			width: 300px;
+			font-family: Helvetica, sans-serif;
+		}
+		h1,
+		h2,
+		h3 {
+			font-weight: normal;
+		}
+		.center-content {
+			max-width: 400px;
+			display: block;
+			margin: 0 auto;
+			padding: 15px;
+		}
+		.center-text {
+			text-align: center;
+		}
+		#header {
+			color: #ffffff;
+			background: #333333;
+		}
+		#mainContent {
+			background: #f3f3f3;
+		}
+		.submit-btn {
+			background: #333333;
+			color: #ffffff;
+			border-radius: 20px;
+			padding: 5px 15px;
+			margin: 10px 0;
+			display: inline-block;
+			text-decoration: none;
+		}
+		#userName,
+		#x,
+		#timeout {
+			box-sizing: border-box;
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			margin: 10px 0;
+		}
+		.logo-img {
+			display: block;
+			margin: 20px auto;
+			width: 200px;
+			max-width: 100%;
+		}
+		.hidden {
+			display: none;
+		}
+		#mainContent .loggedOut,
+		#mainContent .loggingIn,
+		#mainContent .loggedIn,
+		#mainContent .error {
+			display: none;
+		}
+		#mainContent.loggedOutActive .loggedOut {
+			display: block;
+		}
+		#mainContent.loggingInActive .loggingIn {
+			display: block;
+		}
+		#mainContent.loggedInActive .loggedIn {
+			display: block;
+		}
+		#mainContent.errorActive .error {
+			display: block;
+		}
+		.loggingIn {
+			position: relative;
+		}
+
+		@keyframes spin {
+			to { transform: rotate(1turn); }
+		}
+
+		.progress {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			display: inline-block;
+			width: 5em;
+			height: 5em;
+			margin: 0 auto;
+			font-size: 8px;
+			overflow: hidden;
+			animation: spin 1s infinite steps(8);
+		}
+
+		.progress:before,
+		.progress:after,
+		.progress > div:before,
+		.progress > div:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 2.25em;
+			width: .5em;
+			height: 1.5em;
+			border-radius: .2em;
+			background: rgba(0,0,0,.5);
+			box-shadow: 0 3.5em rgba(0,0,0,.5);
+			transform-origin: 50% 2.5em;
+		}
+
+		.progress:before {
+			background: rgba(0,0,0,.4);
+		}
+
+		.progress:after {
+			transform: rotate(-45deg);
+			background: rgba(0,0,0,.3);
+		}
+
+		.progress > div:before {
+			transform: rotate(-90deg);
+			background: rgba(0,0,0,.2);
+		}
+
+		.progress > div:after {
+			transform: rotate(-135deg);
+			background: rgba(0,0,0,.1);
+		}
+		.logging-in-text {
+			text-align: center;
+			padding-top: 50px;
+			color: rgba(0,0,0,.5);
+		}
+		.error-container {
+			border-radius: 5px;
+			background: rgba(173,24,24,0.15);
+			border: 1px solid rgba(173,24,24,0.65);
+			padding: 10px;
+		}
+		.loggedIn span {
+			font-size: 18px;
+			color: #999999;
+			line-height: 30px;
+		}
+		hr {
+			border: 0;
+			border-bottom: 1px solid #333333;
+		}
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="center-content">
+		Request User Override
+	</div>
+</div>
+<div id="logoContainer">
+	<div class="center-content">
+		<img class="logo-img" src="images/logo.jpg"/>
+	</div>
+</div>
+<div id="mainContent">
+	<div class="center-content">
+		<div class="loggedOut">
+			<form method="POST">
+				<div id="errorMessageLoginContainer" style="display: none">
+					<div class="error-container">
+						<span id="errorMessageLogin"></span>
+					</div>
+				</div>
+				<p>Username:<br><input type="text" id="userName" name="userName" maxlength="64" tabindex="1"></p>
+				<p>Password:<br><input type="password" id="x" name="x" maxlength="128" tabindex="2"></p>
+				<p>Time Limit:<br>
+					<select id="timeout" name="timeout" tabindex="3">
+						<option value="5" label="5 Minutes"/>
+						<option value="10" label="10 Minutes"/>
+						<option value="30" label="30 Minutes"/>
+						<option value="60" label="1 Hour"/>
+						<option value="180" label="3 Hours"/>
+					</select>
+				</p>
+				<a class="submit-btn center-text" id="loginButton" tabindex="4">Login</a>
+			</form>
+		</div>
+		<div class="loggingIn">
+			<div class="progress">
+				<div></div>
+			</div>
+			<h3 class="logging-in-text">
+				Logging-In
+			</h3>
+		</div>
+		<div class="loggedIn">
+			<h2>
+				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" fill="#58863C" viewBox="0 0 10.4 8" style=" display: inline-block; enable-background:new 0 0 10.4 8;" xml:space="preserve"><g><path d="M10.2,2L5.3,6.9L4.4,7.8C4.3,7.9,4.1,8,4,8S3.6,7.9,3.5,7.8L2.6,6.9L0.2,4.4C0.1,4.3,0,4.1,0,4s0.1-0.3,0.2-0.5l0.9-0.9
+		c0.1-0.1,0.3-0.2,0.5-0.2S1.9,2.5,2,2.6l2,2l4.4-4.4C8.5,0.1,8.7,0,8.8,0s0.3,0.1,0.5,0.2l0.9,0.9c0.1,0.1,0.2,0.3,0.2,0.5S10.3,1.9,10.2,2z"/></g></svg>
+				Logged In
+			</h2>
+			<hr>
+			<p>Override Username:<br><span id="overrideUsername"/></p>
+			<p>Group #:<br><span id="overrideGroupNumber"/></p>
+			<p>Group Name:<br><span id="overrideGroupName"/></p>
+			<a class="submit-btn center-text" id="logoutButton" tabindex="1">Logout</a>
+		</div>
+		<div class="error">
+			<div class="error-container">
+				<b>An error has occurred:</b><br>
+				<span id="errorMessage"></span>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
